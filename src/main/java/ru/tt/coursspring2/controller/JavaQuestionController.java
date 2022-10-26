@@ -9,7 +9,6 @@ import ru.tt.coursspring2.service.JavaQuestionServiceImpl;
 import ru.tt.coursspring2.service.QuestionService;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("/exam/java")
@@ -26,7 +25,7 @@ public class JavaQuestionController {
         return questionService.add(question,answer);
     }
     @GetMapping("/remove")
-    public Question removeQuestion(@RequestParam String question, @RequestParam String answer){
+    public Boolean removeQuestion(@RequestParam String question, @RequestParam String answer){
         Question question1 = new Question(question,answer);
         return questionService.remove(question1);
     }

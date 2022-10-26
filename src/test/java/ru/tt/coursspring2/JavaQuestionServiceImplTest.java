@@ -1,13 +1,7 @@
 package ru.tt.coursspring2;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import ru.tt.coursspring2.exeptions.ExeptionEmpty;
-import ru.tt.coursspring2.exeptions.ExeptionOverSize;
+import ru.tt.coursspring2.exeptions.EmptyInputParamException;
 import ru.tt.coursspring2.model.Question;
 import ru.tt.coursspring2.service.JavaQuestionServiceImpl;
 
@@ -17,7 +11,6 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.mockito.Mockito.when;
 
 public class JavaQuestionServiceImplTest {
     private JavaQuestionServiceImpl javaQuestionService = new JavaQuestionServiceImpl();
@@ -40,7 +33,7 @@ public class JavaQuestionServiceImplTest {
         assertThat(javaQuestionService.getAll()).
                 isNotEmpty()
                 .hasSize(5)
-                .isEqualTo(expected.stream().collect(Collectors.toList()));
+                .isEqualTo(expected);
 
     }
     @Test
@@ -51,7 +44,7 @@ public class JavaQuestionServiceImplTest {
     }
     @Test
     public void testEmptyString(){
-        assertThatExceptionOfType(ExeptionEmpty.class)
+        assertThatExceptionOfType(EmptyInputParamException.class)
                 .isThrownBy(()->javaQuestionService.add("asd",""));
     }
     @Test
@@ -61,7 +54,12 @@ public class JavaQuestionServiceImplTest {
 }
     @Test
     public void testRemvoe(){
-        assertThat(javaQuestionService.remove(expected.get(2)))
-                .isEqualTo(expected.get(2));
+        javaQuestionService.add(expected.get(0));
+        javaQuestionService.add(expected.get(1));
+        javaQuestionService.add(expected.get(2));
+        javaQuestionService.add(expected.get(3));
+        javaQuestionService.add(expected.get(4));
+        assertThat(javaQuestionService.remove(expected.get(2))).isTrue();
+
     }
 }

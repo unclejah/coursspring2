@@ -6,14 +6,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.tt.coursspring2.exeptions.ExeptionOverSize;
+import ru.tt.coursspring2.exeptions.OversizeException;
 import ru.tt.coursspring2.model.Question;
 import ru.tt.coursspring2.service.ExaminerServiceImpl;
 import ru.tt.coursspring2.service.JavaQuestionServiceImpl;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,8 +41,8 @@ public class ExaminerServiceImplTest {
     }
     @Test
     public void testOverSize(){
-        assertThatExceptionOfType(ExeptionOverSize.class)
-                .isThrownBy(()->examinerService.getQuestion(10));
+        assertThatExceptionOfType(OversizeException.class)
+                .isThrownBy(()->examinerService.getQuestions(10));
     }
 
     @Test
@@ -52,7 +51,7 @@ public class ExaminerServiceImplTest {
         when(javaQuestionService.getRandQuestion()).thenReturn(
                 new Question("q1", "q1")
         );
-        assertThat(examinerService.getQuestion(1)).
+        assertThat(examinerService.getQuestions(1)).
                 isNotEmpty()
                 .hasSize(1)
                 .contains(expected.get(0));

@@ -2,7 +2,7 @@ package ru.tt.coursspring2.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import ru.tt.coursspring2.exeptions.ExeptionEmpty;
+import ru.tt.coursspring2.exeptions.EmptyInputParamException;
 import ru.tt.coursspring2.model.Question;
 
 import java.util.*;
@@ -20,7 +20,7 @@ public class JavaQuestionServiceImpl implements QuestionService{
     public Question add(String question, String answer) {
 
         if(StringUtils.isEmpty(question)||StringUtils.isEmpty(answer)){
-            throw new ExeptionEmpty("Empty paratere");
+            throw new EmptyInputParamException("Empty paratere");
         }
         Question question1 = new Question(question,answer);
         questions.add(question1);
@@ -30,24 +30,24 @@ public class JavaQuestionServiceImpl implements QuestionService{
     @Override
     public Question add(Question question) {
         if(StringUtils.isEmpty(question.getQuestion())||StringUtils.isEmpty(question.getAnswer())){
-            throw new ExeptionEmpty("Empty paratere");
+            throw new EmptyInputParamException("Empty paratere");
         }
         questions.add(question);
         return question;
     }
 
     @Override
-    public Question remove(Question question) {
+    public Boolean remove(Question question) {
         if(StringUtils.isEmpty(question.getQuestion())||StringUtils.isEmpty(question.getAnswer())){
-            throw new ExeptionEmpty("Empty parameter");
+            throw new EmptyInputParamException("Empty parameter");
         }
-        questions.remove(question);
-        return question;
+
+        return questions.remove(question);
     }
 
     @Override
     public Collection<Question> getAll() {
-        return questions.stream().collect(Collectors.toList());
+        return new ArrayList<Question>(questions);
     }
 
     @Override
