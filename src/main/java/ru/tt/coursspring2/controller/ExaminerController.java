@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.tt.coursspring2.model.Question;
 import ru.tt.coursspring2.service.ExaminerService;
 import ru.tt.coursspring2.service.ExaminerServiceImpl;
-import ru.tt.coursspring2.service.JavaQuestionServiceImpl;
-import ru.tt.coursspring2.service.QuestionService;
+
 
 import java.util.Collection;
 

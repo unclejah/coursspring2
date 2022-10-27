@@ -3,10 +3,10 @@ package ru.tt.coursspring2.service;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import ru.tt.coursspring2.exeptions.EmptyInputParamException;
+import ru.tt.coursspring2.exeptions.UserNotRemovedException;
 import ru.tt.coursspring2.model.Question;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class JavaQuestionServiceImpl implements QuestionService{
@@ -37,12 +37,13 @@ public class JavaQuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public Boolean remove(Question question) {
+    public Question remove(Question question) {
         if(StringUtils.isEmpty(question.getQuestion())||StringUtils.isEmpty(question.getAnswer())){
             throw new EmptyInputParamException("Empty parameter");
         }
-
-        return questions.remove(question);
+        boolean isRemoved = questions.remove(question);
+        if (isRemoved == false) { throw new UserNotRemovedException("User not removed");  }
+        return question;
     }
 
     @Override

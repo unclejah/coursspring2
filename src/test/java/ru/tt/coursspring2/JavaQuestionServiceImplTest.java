@@ -2,6 +2,7 @@ package ru.tt.coursspring2;
 
 import org.junit.jupiter.api.Test;
 import ru.tt.coursspring2.exeptions.EmptyInputParamException;
+import ru.tt.coursspring2.exeptions.UserNotRemovedException;
 import ru.tt.coursspring2.model.Question;
 import ru.tt.coursspring2.service.JavaQuestionServiceImpl;
 
@@ -59,7 +60,14 @@ public class JavaQuestionServiceImplTest {
         javaQuestionService.add(expected.get(2));
         javaQuestionService.add(expected.get(3));
         javaQuestionService.add(expected.get(4));
-        assertThat(javaQuestionService.remove(expected.get(2))).isTrue();
+        assertThat(javaQuestionService.remove(expected.get(2))).isEqualTo(expected.get(2));
 
+    }
+    @Test
+    public void testNotRemoved(){
+        javaQuestionService.add(expected.get(0));
+        javaQuestionService.add(expected.get(1));
+        assertThatExceptionOfType(UserNotRemovedException.class)
+                .isThrownBy(()->javaQuestionService.remove(expected.get(2)));
     }
 }

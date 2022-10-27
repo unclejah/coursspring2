@@ -25,7 +25,7 @@ public class JavaQuestionController {
         return questionService.add(question,answer);
     }
     @GetMapping("/remove")
-    public Boolean removeQuestion(@RequestParam String question, @RequestParam String answer){
+    public Question removeQuestion(@RequestParam String question, @RequestParam String answer){
         Question question1 = new Question(question,answer);
         return questionService.remove(question1);
     }
